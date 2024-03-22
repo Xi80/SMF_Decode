@@ -127,11 +127,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="SMFPlayer.cpp" />
+    <ClCompile Include="smf_player.cpp" />
     <ClCompile Include="SMFReader.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SMFPlayer.h" />
+    <ClInclude Include="smf_player.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

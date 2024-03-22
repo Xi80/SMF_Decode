@@ -18,12 +18,12 @@
     <ClCompile Include="SMFReader.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="SMFPlayer.cpp">
+    <ClCompile Include="smf_player.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SMFPlayer.h">
+    <ClInclude Include="smf_player.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

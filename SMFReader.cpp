@@ -2,7 +2,7 @@
 //
 
 #include <iostream>
-#include "SMFPlayer.h"
+#include "smf_player.hpp"
 
 void midiCallback(uint8_t* data, size_t length) {
 	if (length < 1)return;
@@ -14,14 +14,15 @@ void midiCallback(uint8_t* data, size_t length) {
 
 int main()
 {
-	SMFPlayer player(midiCallback);
+	gPlayer = new SMFPlayer(midiCallback);
 
-	int ret = player.Open("noname.mid");
-	uint32_t delta = 0;
+	int ret = gPlayer->Open("noname.mid");
+	uint64_t delta = 0;
 
-	while (player.Play(&delta) == SMF_RET_OK) {
-		printf("Wait %d ms\n", delta);
+	while (gPlayer->Play(&delta) == SMF_RET_OK) {
+		printf("Wait %lld us\n", delta);
 	}
+	gPlayer->Close();
 	std::cout << ret << "\n";
 }
 

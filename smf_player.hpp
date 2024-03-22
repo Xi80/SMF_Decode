@@ -4,9 +4,18 @@
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 
-#include <cstring>
-#include <cstdio>
 #include <cstdint>
+#include <cstdio>
+#include <cstring>
+
+#if defined _WIN32
+
+#else
+#include "f_util.h"
+#include "ff.h"
+#include "hw_def.hpp"
+#include "system_info.hpp"
+#endif
 
 #define SMF_RET_ERR_FILE_NOT_FOUND -1
 #define SMF_RET_ERR_REACHED_EOF -2
@@ -18,6 +27,7 @@
 #define SMF_RET_ERR_TRACK_NOT_FOUND -8
 #define SMF_RET_OK 0
 
+#if defined _WIN32
 enum eMidiMessageType {
 	MidiMessageType_NoteOff = 0x80,
 	MidiMessageType_NoteOn = 0x90,
@@ -34,12 +44,15 @@ enum eMidiMessageType {
 	MidiMessageType_ActiveSensing = 0xFE,
 	MidiMessageType_MetaEvent = 0xFF,
 };
-
-class SMFPlayer
-{
+#else
+#include "midi.hpp"
+#endif
+class SMFPlayer {
 public:
 	SMFPlayer(void (*cb)(uint8_t*, size_t)) {
+#if defined _WIN32
 		smfFile = NULL;
+#endif
 		midiMessageCallback = cb;
 		delta = 0;
 		memset(message, 0x00, sizeof(message));
@@ -51,8 +64,9 @@ public:
 	}
 
 	int Open(const char* fileName);
-	int Play(uint32_t* nextDelta);
+	int Play(uint64_t* nextDelta);
 	int Close(void);
+
 private:
 	void (*midiMessageCallback)(uint8_t*, size_t);
 
@@ -70,8 +84,12 @@ private:
 	uint8_t meta[256];
 	uint8_t message[256];
 	uint8_t status;
+
 #if defined _WIN32
 	FILE* smfFile;
+#else
+	FIL smfFile;
 #endif
 };
 
+extern SMFPlayer* gPlayer;
